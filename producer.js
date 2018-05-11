@@ -1,13 +1,7 @@
+var stompit = require('stompit');
+var destination = '/topic/dk.godkode.html';
 
-let stompit = require('stompit');
-/*require('jsdom').window("",function(error, window) {
-    if (error) {
-        console.log(error);
-        return;
-    }
-    let $ = require('jquery')(window);
-});*/
-
+// Import jquery from fantom html dom created by jsdom
 var jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
@@ -15,70 +9,78 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = require("jquery")(window);
 
+// Connection Options
 var connectOptions = {
     'host': 'localhost',
     'port': 61613,
-    'connectHeaders':{
-      'host': '/',
-      'login': 'admin',
-      'passcode': 'admin',
-      'heart-beat': '5000,5000'
+    'connectHeaders': {
+        'host': '/',
+        'login': 'admin',
+        'passcode': 'admin',
+        'heart-beat': '5000,5000'
     }
-  };
+};
+
 function send(divEL) {
-    console.log(divEL); 
-stompit.connect(connectOptions, function(error, client) {
-    console.log('30 producer');
-    if (error) {
-      console.log('connect error ' + error.message);
-      return;
-    }
-    console.log('35 producer');
-    var sendHeaders = {
-      'destination': '/topic/dk.godkode.html', 
-      'content-type': 'text/plain',
-      'ack': 'client-individual'
-    };
-    // problems do we get the message?
-    var frame = client.publish(sendHeaders);
-    frame.write('hello');
-    frame.end();
-    console.log('45 producer');
-    var subscribeHeaders = {
-        'destination': '/topic/dk.godkode.html',
-        'ack': 'client-individual'
-      };
-      console.log('50 producer');
-      
-      client.subscribe(subscribeHeaders, function(error, message) {
-        console.log('52 producer');
+    // Connect to message broker
+    stompit.connect(connectOptions, function(error, client) {
+        //console.log('30 producer');
         if (error) {
-          console.log('subscribe error ' + error.message);
-          return;
-        }
-        
-        message.readString('utf-8', function(error, body) {
-            console.log('59 producer');
-          if (error) {
-            console.log('read message error ' + error.message);
+            console.log('connect error ' + error.message);
             return;
-          }
-          console.log('64 producer');
-          console.log('received message: ' + body);
+        }
+
+        // Set header for sender
+        var sendHeaders = {
+            'destination': destination,
+            'content-type': 'text/plain',
+            'ack': 'client-individual',
+            'persistence': true
+        };
+
+        // Only for test
+        /*
+        var subscribeHeaders = {
+            'destination': destination,
+            'ack': 'client-individual'
+        };
+
+        client.subscribe(subscribeHeaders, function(error, message) {
+            console.log('52 producer');
+            if (error) {
+                console.log('subscribe error ' + error.message);
+                return;
+            }
+
+            message.readString('utf-8', function(error, body) {
+                console.log('59 producer');
+                if (error) {
+                    console.log('read message error ' + error.message);
+                    return;
+                }
+                console.log('64 producer');
+                console.log('received message: ' + body);
+            });
+            console.log('68 producer');
+            client.ack(message);
+            client.disconnect();
         });
-        console.log('68 producer');
-        client.ack(message);
+        */
+
+        // Message is send to ActiveMQ
+        var frame = client.send(sendHeaders);
+        frame.write(divEL);
+        frame.end();
+        // Disconnect client
         client.disconnect();
     });
-    console.log('70 producer');
-
-  //  client.disconnect();
-});
 
 }
 
+/* Copy Paste from godkode.js */
+
 let reader; //GLOBAL File Reader object for demo purpose only
-let divEL = {innerHTML: ''}; // GLOBAL: So i can write to it any where
+let divEL = { innerHTML: '' }; // GLOBAL: So i can write to it any where
 
 var spreadsheetID = "14_HLgko6zg7R8CgcD7fZWuSQ5phmVMrjslwNkAhehpY";
 
@@ -101,15 +103,13 @@ function checkFileAPI() {
         alert('The File APIs are not fully supported by your browser. Fallback required.');
         return false;
     }
-
 }
 
 function displayContent() {
-    divEL.innerHTML='';
+    divEL.innerHTML = '';
     // Get data and rework to data Array
-    console.log('producer 67');
+    //console.log('producer 67');
     readSheet();
-    
 }
 
 var countCell = 0;
@@ -151,7 +151,6 @@ function htmlReturn(txt) {
     }
 
     // Html build DONE 
-
     return valueReturn;
 }
 
@@ -176,7 +175,6 @@ function getValue(event) {
         //console.log("End row");
     }
 }
-
 
 // New reader from 
 // SOURCE: https://ctrlq.org/code/20004-google-spreadsheets-json
@@ -259,15 +257,8 @@ function readSheet() {
 
         } // i = 11
 
-        //console.log(dataHolderOfArrays);
-
-        // display content
-        //console.log(dataHolderOfArrays);
-       // console.log(divEL);
         send(divEL.innerHTML);
     });
-    //console.log(divEL);
-    //sendData(divEL);
 }
 
 function isData(cell) {
@@ -277,15 +268,6 @@ function isData(cell) {
     return " ";
 }
 
-
-
-
-
-
 module.exports = {
     produce: displayContent()
-
-    
 }
-
-    
