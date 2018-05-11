@@ -1,0 +1,19 @@
+div.borderMeBottom {
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+}
+
+div.borderMeTop {
+	border-top-style: solid;
+	border-top-width: 2px;	
+}
+
+div.borderMeLeft {
+	border-left-style: solid;
+	border-left-width: 2px;
+}
+
+div.borderMeRight {
+	border-right-style: solid;
+	border-right-width: 2px;
+}
