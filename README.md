@@ -14,7 +14,7 @@ Node.js
 ## Installation Guide
 1. Open npm console in project folder.
 2. Do 'npm install'
-3. Run 'node app.js'
+3. Run 'npm start'
 
 ## Settings
 1. app.js
