@@ -16,10 +16,10 @@ app.get('/', function(req, res, next) {
     res.render('./index.html');
 });
 app.get('/content', function(req, res, next) {
-    res.sendFile('contentEvents.html');
+    res.sendFile('./views/contentEvents.html');
 });
 app.get('/links', function(req, res, next) {
-    res.sendFile('links.html');
+    res.sendFile('./views/links.html');
 });
 
 // Call path to send message to ActiveMQ
