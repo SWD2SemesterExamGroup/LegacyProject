@@ -7,18 +7,19 @@ app.use(express.static("."));
 app.use(express.static(__dirname + '/views/'));
 app.use(cors());
 app.set('view engine', 'ejs');
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log('We are live on ' + port);
+    console.log("Process env Port: " + process.env.PORT);
 });
 
 app.get('/', function(req, res, next) {
-    res.sendfile('index.html');
+    res.render('./index.html');
 });
 app.get('/content', function(req, res, next) {
-    res.sendfile('./views/contentEvents.html');
+    res.render('contentEvents.html');
 });
 app.get('/links', function(req, res, next) {
-    res.sendfile('./views/links.html');
+    res.render('links.html');
 });
 
 // Call path to send message to ActiveMQ
