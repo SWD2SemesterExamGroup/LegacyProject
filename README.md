@@ -1,6 +1,9 @@
 # Godkode Legacy Project
 Node.js
 
+# Deployment
+Heroku: https://godkode.herokuapp.com/
+
 ## Repository Package Include
 * Source Code, package.json
 
