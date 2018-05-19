@@ -29,11 +29,11 @@ Heroku: https://godkode.herokuapp.com/
         * Here you find Broker Connection Settings
 
 ## Paths
-* https://localhost:4444/getdata
+* https://godkode.herokuapp.com/getdata
 
 ## Original Legacy Project
 * https://github.com/godkode/godkode.github.io
     * Version: 2.0.66
 
 # Version
-- 0.1.2
+- 0.1.3
