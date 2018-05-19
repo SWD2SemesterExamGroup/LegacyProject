@@ -26,5 +26,8 @@ app.get('/links', function(req, res, next) {
 app.get('/getdata', function(req, res, next) {
     let prod = require('./producer.js');
     prod.produce;
-    res.status(200).send('Data Updated');
+    res.status(200).json({
+        success: true,
+        message: 'Data updated'
+    });
 });
