@@ -1,5 +1,5 @@
 var stompit = require('stompit');
-var destination = '/topic/dk.godkode.html';
+var destination = '/queue/dk.godkode.html';
 
 // Import jquery from fantom html dom created by jsdom
 var jsdom = require("jsdom");
@@ -8,19 +8,7 @@ const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = require("jquery")(window);
-/*
-// Connection Options for localhost options
-var connectOptions = {
-    'host': 'localhost',
-    'port': 61613,
-    'connectHeaders': {
-        'host': '/',
-        'login': 'admin',
-        'passcode': 'admin',
-        'heart-beat': '5000,5000'
-    }
-};
-*/
+
 // For AWS broker
 var connectOptions = {
     'host': 'b-27699194-d867-4b89-a04f-c448b445ae8d-1.mq.us-east-2.amazonaws.com',
@@ -41,11 +29,9 @@ function send(divEL) {
         if (error) {
             console.log('connect error ' + error.message);
             console.log(error);
-            //console.log('15 producer');
             return;
         }
 
-        //console.log('29 producer');
         // Set header for sender
         var sendHeaders = {
             'destination': destination,
@@ -53,59 +39,17 @@ function send(divEL) {
             'persistence': true
         };
 
-        // In function testDetails copy paste function code
-
         // Message is send to ActiveMQ
-        //console.log('30 producer');
         var frame = client.send(sendHeaders);
-        //console.log('31 producer');
+
         frame.write(divEL);
-        //console.log('32 producer');
+
         frame.end();
-        //console.log('33 producer');
 
-        // Disconnect client
-        //client.disconnect();
     });
-}
-
-
-// Consumer test */
-function testDetails() {
-    // Only for test
-    // remember to connect to broker
-    /*
-    var subscribeHeaders = {
-        'destination': destination,
-        'ack': 'client-individual',
-        'content-type': 'text/plain'
-    };
-
-    client.subscribe(subscribeHeaders, function(error, message) {
-        console.log('52 producer');
-        if (error) {
-            console.log('subscribe error ' + error.message);
-            return;
-        }
-
-        message.readString('utf-8', function(error, body) {
-            console.log('59 producer');
-            if (error) {
-                console.log('read message error ' + error.message);
-                return;
-            }
-            console.log('64 producer');
-            console.log('received message: ' + body);
-        });
-        console.log('68 producer');
-        client.ack(message);
-        client.disconnect();
-    });
-    */
 }
 
 /* Copy Paste from godkode.js */
-
 let reader; //GLOBAL File Reader object for demo purpose only
 let divEL = { innerHTML: '' }; // GLOBAL: So i can write to it any where
 
