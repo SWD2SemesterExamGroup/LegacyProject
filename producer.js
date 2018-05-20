@@ -50,7 +50,7 @@ function send(divEL) {
 }
 
 function getHtml() {
-    displayContent();
+    await displayContent();
     return divEL;
 }
 
