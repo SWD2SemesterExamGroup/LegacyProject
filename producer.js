@@ -49,6 +49,11 @@ function send(divEL) {
     });
 }
 
+function getHtml() {
+
+    return divEL;
+}
+
 /* Copy Paste from godkode.js */
 let reader; //GLOBAL File Reader object for demo purpose only
 let divEL = { innerHTML: '' }; // GLOBAL: So i can write to it any where
@@ -240,5 +245,6 @@ function isData(cell) {
 }
 
 module.exports = {
-    produce: displayContent()
+    produce: displayContent(),
+    html: getHtml()
 }
