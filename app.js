@@ -1,6 +1,7 @@
 const express = require('express'); // Express to set up path ways
 let app = express(); // Initiate
 let cors = require('cors'); // Cors is used for ??
+var reload = require('require-reload')(require);
 
 const port = 4444;
 app.use(express.static("."));
@@ -24,10 +25,11 @@ app.get('/links', function(req, res, next) {
 
 // Call path to send message to ActiveMQ
 app.get('/getdata', function(req, res, next) {
-    let prod = require('./producer.js');
-    prod.produce;
+    var prod = reload('./producer.js');
+
     res.status(200).json({
         success: true,
         message: 'Data updated'
     });
+    prod = null;
 });

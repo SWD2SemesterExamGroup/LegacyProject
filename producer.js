@@ -12,7 +12,6 @@ var $ = require("jquery")(window);
 // For AWS broker
 var connectOptions = {
     'host': 'b-27699194-d867-4b89-a04f-c448b445ae8d-1.mq.us-east-2.amazonaws.com',
-    'uri': 'b-27699194-d867-4b89-a04f-c448b445ae8d-1.mq.us-east-2.amazonaws.com',
     'port': 61614,
     'ssl': true,
     'connectHeaders': {
@@ -23,9 +22,10 @@ var connectOptions = {
 };
 
 function send(divEL) {
+    //console.log("10 send");
     // Connect to message broker
     stompit.connect(connectOptions, function(error, client) {
-        //console.log('10 producer');
+        console.log('10 producer');
         if (error) {
             console.log('connect error ' + error.message);
             console.log(error);
@@ -35,8 +35,7 @@ function send(divEL) {
         // Set header for sender
         var sendHeaders = {
             'destination': destination,
-            'content-type': 'text/plain',
-            'persistence': true
+            'content-type': 'text/plain'
         };
 
         // Message is send to ActiveMQ
@@ -45,7 +44,8 @@ function send(divEL) {
         frame.write(divEL);
 
         frame.end();
-
+        //console.log('10 producer');
+        client.disconnect();
     });
 }
 
@@ -229,9 +229,7 @@ function readSheet() {
         } // i = 11
 
         send(divEL.innerHTML);
-
     });
-
 }
 
 function isData(cell) {
