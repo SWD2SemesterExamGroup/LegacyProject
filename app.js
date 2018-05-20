@@ -34,10 +34,11 @@ app.get('/getdata', function(req, res, next) {
 
 app.get('/gethtml', function(req, res, next) {
     let producer = require('./producer.js');
+
     producer.produce;
     console.log(producer.html);
     res.status(200).json({
-        html: producer.html,
+        html: 'producer.html',
         message: 'Html is fetched'
     });
 });

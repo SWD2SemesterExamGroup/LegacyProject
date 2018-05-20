@@ -49,18 +49,13 @@ function send(divEL) {
     });
 }
 
-function getHtml() {
-    await displayContent();
-    return divEL;
-}
-
 /* Copy Paste from godkode.js */
 let reader; //GLOBAL File Reader object for demo purpose only
-let divEL = { innerHTML: '' }; // GLOBAL: So i can write to it any where
+var divEL = { innerHTML: '' }; // GLOBAL: So i can write to it any where
 
 var spreadsheetID = "14_HLgko6zg7R8CgcD7fZWuSQ5phmVMrjslwNkAhehpY";
 
-var eventCounter = 5; // +1 is a whole week / add +1 to skip a week (from tuesday to tuesday)
+var eventCounter = 1; // +1 is a whole week / add +1 to skip a week (from tuesday to tuesday)
 
 function eventProgess() {
     // event start on 3 and every event takes out 8 spaces
@@ -85,7 +80,7 @@ function displayContent() {
     divEL.innerHTML = '';
     // Get data and rework to data Array
     //console.log('producer 67');
-    readSheet();
+    readSheet()
 }
 
 var countCell = 0;
@@ -126,7 +121,7 @@ function htmlReturn(txt) {
         valueReturn = "";
     }
 
-    // Html build DONE 
+    // Html build DONE
     return valueReturn;
 }
 
@@ -171,60 +166,60 @@ function readSheet() {
             console.log("Data == null");
         }
         var entry = data.feed.entry;
-        //console.log("The Entry of the call back by url. FIND sheet former!!!");
+        console.log("The Entry of the call back by url. FIND sheet former!!!");
         //console.log(entry);
 
         for (var i = eventProgess(); i < entry.length; i++) {
 
             var dataHolderArray = [];
-            var counterArrat = 0;
+            var counterArray = 0;
 
             var date = entry[i].gsx$day.$t + " " + entry[i].gsx$info.$t;
-            dataHolderArray[counterArrat] = date;
-            counterArrat++;
+            dataHolderArray[counterArray] = date;
+            counterArray++;
 
             i++;
             // i = 4
 
             // status
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$info);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$info);
+            counterArray++;
 
             // title
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$title);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$title);
+            counterArray++;
 
             // description;
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$description);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$description);
+            counterArray++;
 
             i++;
             // i = 5
 
             // time
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$info);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$info);
+            counterArray++;
             //var time = entry[i].gsx$_cx0b9.$t;
             i++;
             // i = 6
 
             // invite
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$info);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$info);
+            counterArray++;
 
             //var invite = entry[i].gsx$_cpzh4.$t;
             i++;
             // i = 7
 
             // room
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$info);
-            counterArrat++;
+            dataHolderArray[counterArray] = isData(entry[i].gsx$info);
+            counterArray++;
 
             i++;
             // i = 8
 
             // company/who
-            dataHolderArray[counterArrat] = isData(entry[i].gsx$info);
+            dataHolderArray[counterArray] = isData(entry[i].gsx$info);
 
             i += 2;
             // i = 10
@@ -234,7 +229,9 @@ function readSheet() {
         } // i = 11
 
         send(divEL.innerHTML);
+        return divEL.innerHTML;
     });
+    return divEL.innerHTML;
 }
 
 function isData(cell) {
@@ -246,5 +243,5 @@ function isData(cell) {
 
 module.exports = {
     produce: displayContent(),
-    html: getHtml()
+    html: readSheet()
 }
