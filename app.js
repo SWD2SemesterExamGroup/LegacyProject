@@ -31,14 +31,3 @@ app.get('/getdata', function(req, res, next) {
         message: 'Data updated'
     });
 });
-
-app.get('/gethtml', function(req, res, next) {
-    let producer = require('./producer.js');
-
-    producer.produce;
-    console.log(producer.html);
-    res.status(200).json({
-        html: 'producer.html',
-        message: 'Html is fetched'
-    });
-});

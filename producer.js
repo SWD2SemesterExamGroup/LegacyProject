@@ -90,7 +90,7 @@ var countCell = 0;
 function htmlReturn(txt) {
     var valueReturn = "";
 
-    // This is the Div of the coloum.. :)
+    // This is the Div of the column.. :)
     valueReturn += "<div class='col-xs-12 col-sm-6 col-md-4 col-lg-4 borderMeTop'>";
 
     var title = "<H4>" + txt[2] + "</H4>";
@@ -229,9 +229,9 @@ function readSheet() {
         } // i = 11
 
         send(divEL.innerHTML);
-        return divEL.innerHTML;
+
     });
-    return divEL.innerHTML;
+
 }
 
 function isData(cell) {
@@ -242,6 +242,5 @@ function isData(cell) {
 }
 
 module.exports = {
-    produce: displayContent(),
-    html: readSheet()
+    produce: displayContent()
 }
