@@ -35,7 +35,8 @@ function send(divEL) {
         // Set header for sender
         var sendHeaders = {
             'destination': destination,
-            'content-type': 'text/plain'
+            'content-type': 'text/plain',
+            'persistent': 'true'
         };
 
         // Message is send to ActiveMQ
@@ -155,9 +156,9 @@ function readSheet() {
     // var spreadsheetID = "1kyftHPSQ6t_YRkTD__kS78QlOPYENnGRRmwx_pGZQpY";
 
     // Make sure it is public or set to Anyone with link can view 
-    var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
+    var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID +
+        "/od6/public/values?alt=json";
 
-    //console.log(url3);
     var dataHolderOfArrays = [];
 
     $.getJSON(url, function(data) {
